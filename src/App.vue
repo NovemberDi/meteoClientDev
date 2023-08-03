@@ -98,7 +98,7 @@
               }
               this.ws.onerror =  (event) => {
                 console.log('WSerror');
-                alert('Error WS')
+                // alert('Error WS')
                // this.reconnect();
               };
               this.ws.onclose =  (event) => {
