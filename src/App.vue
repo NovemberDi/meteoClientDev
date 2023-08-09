@@ -146,15 +146,6 @@
                             
             },
             
-            setCircleSize(){
-              // console.log('res');
-              let width = document.documentElement.clientWidth;
-              let height = document.documentElement.clientHeight;
-              if (width>450 && width<=900 && height > 800) {this.circleSize.cxy = 180; this.circleSize.r = 160}
-                else {
-                  this.circleSize.cxy = 125; this.circleSize.r = 100
-                }
-            },
             autoModePlay(hour){
               if (hour >= this.timeOfSun.dawn && hour <= this.timeOfSun.sunset) this.nightMode = false
               else this.nightMode = true;
@@ -164,8 +155,7 @@
     mounted(){
     this.getTime();
     this.connect();
-    this.setCircleSize();
-    window.addEventListener('resize', this.setCircleSize) 
+
     }   
   }
   
