@@ -1,10 +1,10 @@
 <template>
 <div class="header" @click="toFull" onselectstart="return false">
-      <div class="date">
+      <div class="date" :class="{dayDate:!nightMode}">
         {{ time.date }}.{{ time.month }}.{{ time.year }}
         {{time.day }}
       </div>
-      <div class="clock"><div>{{time.hour}}</div>
+      <div class="clock" :class="{dayClock:!nightMode}"><div>{{time.hour}}</div>
       <div class="blink"> 
             <div  v-show="time.blink">:</div>
       </div>
@@ -18,6 +18,7 @@
         name: 'MainClock',
         props: {
         time: {type: Object},
+        nightMode:{type: Boolean},
         },
         methods:{
         async toFull(){
@@ -35,6 +36,13 @@
 </script>
 
 <style scoped>
+.dayDate{
+  filter: drop-shadow(0px 5px 5px rgb(34, 32, 43));
+}
+.dayClock{
+filter: drop-shadow(0px 5px 5px rgba(34, 32, 43, 0.608));
+  
+}
 .header{
   display: flex;
   height: 200px;
@@ -49,6 +57,7 @@
   font-size: 22px;
   font-weight: 700;
   margin-top: 8px;
+
 }
 .clock{
 line-height: 60px;  

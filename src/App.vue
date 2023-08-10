@@ -3,7 +3,7 @@
   <div class="nightFilter" :class="{nightFilterOn:nightMode}"></div>
   <div class="root" :class="{night:nightMode}" onselectstart="return false">
     <div class="offline" v-show="!isAliveSensor">сенсор недоступен</div>
-    <MainClock :time = time ></MainClock>
+    <MainClock :time = time :nightMode="nightMode"></MainClock>
      <SensorPanel 
         @click=" autoMode?'':nightMode = !nightMode"
         :nightMode="nightMode"
@@ -11,7 +11,8 @@
         :circleSize="circleSize"
      ></SensorPanel>
      <SettingButton 
-        @click="settingView=!settingView">
+        @click="settingView=!settingView"
+        :nightMode="nightMode">
     </SettingButton>
     <SettingModal  
         @click.self="settingView = false"
@@ -20,17 +21,18 @@
         @switchAutoMode="autoMode = !autoMode"
         >
     </SettingModal>
-    
   </div>  
 </template>
 
 <script>
+  import useConnect from '@/hooks/useConnect'
+
   export default {
 
     data(){
       return {
         nightMode: false,
-        autoMode: true,
+        autoMode: false, //!!!
         settingView: false,
         timeOfSun:{
           dawn: 7,
@@ -170,10 +172,9 @@
   margin: 0;
   padding: 0;
   font-family: 'Jura', sans-serif;
-  /* background-image: url(/src/assets/back3.jpg); */
-  /* background:linear-gradient(-10deg, rgb(7 1 11) 0%, rgb(38 38 43) 45%, rgb(57 48 44) 100%); */
-  background:linear-gradient(-10deg, rgb(7 1 11) 0%, rgb(38 38 43) 45%, rgb(44 49 57) 100%);
-  /* background:linear-gradient(-10deg, rgb(18, 4, 28) 0%, rgb(38 38 43) 45%, rgb(44, 55, 57) 100%); */
+  /* background:linear-gradient(-10deg, rgb(7 1 11) 0%, rgb(38 38 43) 45%, rgb(44 49 57) 100%); */
+  background:linear-gradient(-10deg, rgb(8, 61, 51) 0%, rgb(84, 95, 120) 45%, rgb(169, 228, 230) 100%);
+  /* background:linear-gradient(-10deg, rgb(8, 61, 51) 0%, rgb(158, 197, 106) 45%, rgb(169, 228, 230) 100%); */
   
   background-position: center;
   background-size:cover; 
@@ -187,6 +188,8 @@
   width: 100%;
   position:absolute;
   z-index: 0;
+
+  
   
 }
 .nightFilter{
@@ -208,6 +211,8 @@
   z-index: 500;
   position: relative;
   transition: color 1s linear;
+
+
 }
 .night{
   color: #c6763d;

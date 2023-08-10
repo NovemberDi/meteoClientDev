@@ -1,5 +1,5 @@
 <template>
-      <div class="panel" >
+      <div class="panel" :class="{dayPanel:!nightMode}">
       <div class="sensor inTemp">
         <div class="value">
         Дом <br><p class="textData"> {{ sensors.inTemp }} </p> °C
@@ -64,6 +64,10 @@
   height: 60%;
   display: grid;
   grid-template: 1fr 1fr 1fr / 1fr 1fr ; 
+
+}
+.dayPanel{
+  filter: drop-shadow(0px 5px 5px rgb(34, 32, 43));
 }
 .sensor{
  display: flex;
@@ -78,6 +82,7 @@
   cursor: default;
 
   margin: auto;
+
 }
 .textData{
 margin: 0;
@@ -145,20 +150,7 @@ display: inline;
   height: 360px;
   width: 360px; 
 }
-.circleSvg {
-  width: 360px;
-  height: 360px;
-}
-circle {
-  stroke-width: 15;
 
-  stroke-dasharray: 850;
-  stroke-dashoffset:650;
-}
-.current{
-  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.584));
-  stroke-width: 16;
-}
 
 
 }
