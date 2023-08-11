@@ -189,6 +189,7 @@
   backdrop-filter: blur(3px);
   /* background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.329) 150%); */
   background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.769) 150%);
+
   /* background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.39) 70%); */
 
 background-color: #24242446;
@@ -202,6 +203,7 @@ background-color: #24242446;
 }
 .nightFilter{
   background: radial-gradient(circle, rgb(13, 23, 23) 20%, rgb(0, 0, 0) 150%);
+
   /* background: radial-gradient(circle, rgb(9, 16, 16) 20%, rgb(0, 0, 0) 150%); */
   transition:  0.5s linear;
   height: 100vh;
@@ -216,7 +218,7 @@ background-color: #24242446;
 .root{
   height: 100%;
   /* color: #ffffff; */
-  color: #fbf8d9;
+  color: #fffde0;
 
   z-index: 500;
   position: relative;
