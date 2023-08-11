@@ -32,7 +32,7 @@
     data(){
       return {
         nightMode: false,
-        autoMode: false, //!!!
+        autoMode: true,
         settingView: false,
         timeOfSun:{
           dawn: 7,
@@ -173,9 +173,13 @@
   padding: 0;
   font-family: 'Jura', sans-serif;
   /* background:linear-gradient(-10deg, rgb(7 1 11) 0%, rgb(38 38 43) 45%, rgb(44 49 57) 100%); */
-  background:linear-gradient(-10deg, rgb(8, 61, 51) 0%, rgb(84, 95, 120) 45%, rgb(169, 228, 230) 100%);
-  /* background:linear-gradient(-10deg, rgb(8, 61, 51) 0%, rgb(158, 197, 106) 45%, rgb(169, 228, 230) 100%); */
   
+  /* background:linear-gradient(-10deg, rgb(8, 61, 51) 0%, rgb(84, 110, 120) 45%, rgb(71, 148, 166) 100%); */
+
+  /* background:linear-gradient(-10deg, rgb(58, 22, 2) 0%, rgb(165, 145, 71) 45%, rgb(71, 44, 10) 100%); */
+
+  background:linear-gradient(-10deg, rgb(63, 46, 36) 0%, rgb(162, 160, 151) 45%, rgb(110, 105, 81) 100%);
+
   background-position: center;
   background-size:cover; 
 }
@@ -183,7 +187,11 @@
 <style scoped>
 .filter{
   backdrop-filter: blur(3px);
-  background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.329) 150%);
+  /* background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.329) 150%); */
+  background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.769) 150%);
+  /* background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.39) 70%); */
+
+background-color: #24242446;
   height: 100vh;
   width: 100%;
   position:absolute;
@@ -207,7 +215,9 @@
 }
 .root{
   height: 100%;
-  color: #ffffff;
+  /* color: #ffffff; */
+  color: #fbf8d9;
+
   z-index: 500;
   position: relative;
   transition: color 1s linear;

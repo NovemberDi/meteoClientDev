@@ -18,10 +18,10 @@
 
 <style scoped>
 .nightBtn{
-  fill: rgba(18, 34, 25, 0.449);
+  fill: rgba(33, 52, 41, 0.696);
 }
 .dayBtn{
-  fill: rgba(93, 128, 128, 0.539);
+  fill: rgba(255, 242, 188, 0.321);
   filter: drop-shadow(0px 5px 5px rgb(34, 32, 43));
 }
 .settingBtnWrap{
