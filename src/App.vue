@@ -178,7 +178,9 @@
 
   /* background:linear-gradient(-10deg, rgb(58, 22, 2) 0%, rgb(165, 145, 71) 45%, rgb(71, 44, 10) 100%); */
 
-  background:linear-gradient(-10deg, rgb(63, 46, 36) 0%, rgb(162, 160, 151) 45%, rgb(110, 105, 81) 100%);
+  /* background:linear-gradient(-10deg, rgb(63, 46, 36) 0%, rgb(162, 160, 151) 45%, rgb(110, 105, 81) 100%); */
+  background: conic-gradient(from 60deg at 40%  60%, transparent 0%, #63CFEF75 30%, #86D6EC40 100%) 50% 20%/120% 130%, linear-gradient(20deg, #8EACF5 0%, #67DDE6 30%, #2187CB 70%, #55EDDF 100%);
+  
 
   background-position: center;
   background-size:cover; 
@@ -193,6 +195,12 @@
   /* background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.39) 70%); */
 
 background-color: #24242446;
+
+
+
+
+
+
   height: 100vh;
   width: 100%;
   position:absolute;
