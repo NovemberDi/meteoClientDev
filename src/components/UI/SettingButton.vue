@@ -41,7 +41,7 @@ align-items: center;
   width: 40px;
   /* transform: translate(-50%,50%); */
   transition: 50ms linear;
-  z-index: 100;
+  z-index: 101;
   
 
 

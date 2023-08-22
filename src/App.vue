@@ -4,16 +4,30 @@
   <div class="root" :class="{night:nightMode}" onselectstart="return false">
     <div class="offline" v-show="!isAliveSensor">сенсор недоступен</div>
     <MainClock :time = time :nightMode="nightMode"></MainClock>
-     <SensorPanel 
+     <!-- <SensorPanel 
         @click=" autoMode?'':nightMode = !nightMode"
         :nightMode="nightMode"
         :sensors="sensors"
         :circleSize="circleSize"
-     ></SensorPanel>
+     ></SensorPanel> -->
+     <router-view 
+        @onChangeMode="nightMode = !nightMode"
+        :autoMode="autoMode"
+        :nightMode="nightMode"
+        :sensors="sensors"
+        :circleSize="circleSize"></router-view>
      <SettingButton 
         @click="settingView=!settingView"
         :nightMode="nightMode">
     </SettingButton>
+    <HomeButton 
+    :nightMode="nightMode"
+    @click="$router.push('/')"
+    ></HomeButton>
+    <HistoryButton
+    :nightMode="nightMode"
+    @click="$router.push('/history')"
+    ></HistoryButton>
     <SettingModal  
         @click.self="settingView = false"
         :autoMode="autoMode"

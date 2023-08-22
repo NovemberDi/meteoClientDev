@@ -1,6 +1,8 @@
 import MainClock from '@/components/MainClock.vue'
 import SensorPanel from '@/components/SensorPanel.vue'
-import SettingButton from '@/components/SettingButton.vue'
+import SettingButton from '@/components/UI/SettingButton.vue'
+import HomeButton from '@/components/UI/HomeButton.vue'
+import HistoryButton from '@/components/UI/HistoryButton.vue'
 import SettingModal from '@/components/SettingModal.vue'
 import CirclePpm from '@/components/CirclePpm.vue'
 
@@ -14,4 +16,6 @@ export default[
     SettingButton,
     SettingModal,
     CirclePpm,
+    HomeButton,
+    HistoryButton,
 ]

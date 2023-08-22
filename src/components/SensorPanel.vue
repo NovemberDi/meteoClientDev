@@ -1,5 +1,5 @@
 <template>
-      <div class="panel" :class="{dayPanel:!nightMode}">
+      <div class="panel" :class="{dayPanel:!nightMode}" @click=changeMode>
       <div class="sensor inTemp">
         <div class="value">
         Дом <br><p class="textData"> {{ sensors.inTemp }} </p> °C
@@ -52,9 +52,15 @@
     export default {
         name: 'SensorPanel',
         props:{
+            autoMode:{type: Boolean},
             nightMode:{type: Boolean},
             sensors: {type: Object},
             circleSize: {type: Object},
+        },
+        methods:{
+          changeMode(){
+            if (!this.autoMode) this.$emit('onChangeMode')
+          }
         }
     }
 </script>

@@ -41,6 +41,7 @@
   /* background: #1e110765; */
   background: #e2b08929;
   backdrop-filter: blur(3px);
+  z-index: 100;
 }
 .settingBlock{
   height: 50%;
