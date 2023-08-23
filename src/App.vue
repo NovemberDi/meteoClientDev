@@ -15,7 +15,12 @@
         :autoMode="autoMode"
         :nightMode="nightMode"
         :sensors="sensors"
-        :circleSize="circleSize"></router-view>
+        :circleSize="circleSize"
+
+        :queryResult="queryResult"
+        @onQuery="getData"
+        >
+      </router-view>
      <SettingButton 
         @click="settingView=!settingView"
         :nightMode="nightMode">
@@ -48,6 +53,7 @@
         nightMode: false,
         autoMode: true,
         settingView: false,
+        queryResult: [],
         timeOfSun:{
           dawn: 7,
           sunset: 21
@@ -110,6 +116,9 @@
                   if (this.sensors.ppm>600 && this.sensors.ppm<1201) {for (let key in this.sensors.ppmState){this.sensors.ppmState[key] = false}; this.sensors.ppmState.yellow = true};
                   if (this.sensors.ppm>1200 && this.sensors.ppm<5001) {for (let key in this.sensors.ppmState){this.sensors.ppmState[key] = false}; this.sensors.ppmState.orange = true; }; 
                   if (this.sensors.ppm>5000) {for (let key in this.sensors.ppmState){this.sensors.ppmState[key] = false}; this.sensors.ppmState.red = true};
+                };
+                if (message.type == 'queryResult') {
+                  this.queryResult = message.value
                 }
               }
               this.ws.onerror =  (event) => {
@@ -121,6 +130,9 @@
                 console.log('WSclose');
                 this.reconnect();
               };
+            },
+            getData(event){
+              this.ws.send(JSON.stringify({type:'getData', value:{startTime:event.startTime, endTime:event.endTime}}))
             },
             getTime(){
               let nowTime = new Date();
