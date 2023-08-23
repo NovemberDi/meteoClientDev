@@ -5,6 +5,7 @@ import HomeButton from '@/components/UI/HomeButton.vue'
 import HistoryButton from '@/components/UI/HistoryButton.vue'
 import SettingModal from '@/components/SettingModal.vue'
 import CirclePpm from '@/components/CirclePpm.vue'
+import BarChart from '@/components/BarChart.vue'
 
 
 
@@ -18,4 +19,5 @@ export default[
     CirclePpm,
     HomeButton,
     HistoryButton,
+    BarChart
 ]

@@ -1,9 +1,10 @@
 <template>
     <div class="historyChartsWrap">
-        <button @click="getData"> Жми</button>
-        <a v-for="item in queryResult" :key="item.content.timestamp">
+        <!-- <button @click="getData"> Жми</button> -->
+        <!-- <a v-for="item in queryResult" :key="item.content.timestamp">
             {{ item.content.outTemp }}||{{ new Date(item.content.timestamp) }} 
-        </a>
+        </a> -->
+        <BarChart :chartOptions="chartOptions" :series="series"></BarChart>
     </div>
 </template>
 
@@ -13,6 +14,35 @@
             return {
                 startTime: '',
                 endTime: '',
+
+                series: [{
+            name: 'Температура',
+            data: [0]
+          }, {
+            name: 'Влажность',
+            data: [0]
+          }],
+          chartOptions: {
+            chart: {
+              height: 350,
+              type: 'area'
+            },
+            dataLabels: {
+              enabled: false
+            },
+            stroke: {
+              curve: 'smooth'
+            },
+            xaxis: {
+              type: 'datetime',
+              categories: [new Date().toISOString()]
+            },
+            tooltip: {
+              x: {
+                format: 'dd.MM.yyyy HH:mm'
+              },
+            },
+          },
             }
             
         },
@@ -21,11 +51,33 @@
         },
         methods:{
             getData(){
+              
                 let point =  new Date();
                 this.startTime = point.setHours(point.getHours()-124);
                 this.endTime = Date.now();
+                try{
                 this.$emit('onQuery',{startTime:this.startTime, endTime:this.endTime})
+              } catch{
+                setTimeout(() => this.getData(), 500)
+              }
             }
+        },
+        watch:{
+            queryResult(newValue){
+                this.chartOptions.xaxis.categories = newValue.map((item) => new Date(item.content.timestamp).toISOString());
+                setTimeout(() => {
+                  this.series[0].data = newValue.map((item) => -(-item.content.outTemp));
+                this.series[1].data = newValue.map((item) => -(-item.content.hum));
+                },100)
+                
+                
+                
+                
+
+            }
+        },
+        mounted(){
+          this.getData()
         }
     }
        
