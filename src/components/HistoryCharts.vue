@@ -16,10 +16,10 @@
                 endTime: '',
 
                 series: [{
-            name: 'Температура',
+            name: 'Улица',
             data: [0]
           }, {
-            name: 'Влажность',
+            name: 'Дом',
             data: [0]
           }],
           chartOptions: {
@@ -67,7 +67,7 @@
                 this.chartOptions.xaxis.categories = newValue.map((item) => new Date(item.content.timestamp).toISOString());
                 setTimeout(() => {
                   this.series[0].data = newValue.map((item) => -(-item.content.outTemp));
-                this.series[1].data = newValue.map((item) => -(-item.content.hum));
+                this.series[1].data = newValue.map((item) => -(-item.content.inTemp));
                 },100)
                 
                 
@@ -90,6 +90,7 @@
     /* justify-content: center; */
     flex-direction: column;
     height: 60%;
+    color:#2f281f
 }
 .chartsMain{
     height: 100%;
