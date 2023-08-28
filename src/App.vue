@@ -44,7 +44,7 @@
 </template>
 
 <script>
-  import useConnect from '@/hooks/useConnect'
+
 
   export default {
 
