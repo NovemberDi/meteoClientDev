@@ -36,7 +36,11 @@
           xaxis: {
             type: 'datetime',
             categories: [new Date().toISOString()],
-            tickPlacement: 'on'
+            tickPlacement: 'on',
+            labels: {
+              datetimeUTC: false
+            }
+            
           },
           tooltip: {
             x: {
@@ -65,7 +69,7 @@
           getData(){
             setTimeout(() => {
               let point =  new Date();
-              this.startTime = point.setHours(point.getHours()-1024);
+              this.startTime = point.setHours(point.getHours()-224);
               this.endTime = Date.now();
               try{
               this.$emit('onQuery',{startTime:this.startTime, endTime:this.endTime})

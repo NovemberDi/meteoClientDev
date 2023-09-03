@@ -1,4 +1,5 @@
 <template >
+  <div class="texture"></div>
   <div class="filter" :class="{nightFilter:nightMode}"></div>
   <div class="nightFilter" :class="{nightFilterOn:nightMode}"></div>
   <div class="root" :class="{night:nightMode}" onselectstart="return false">
@@ -190,49 +191,87 @@
 </script>
 
 <style>
-
+/* @font-face {
+  font-family: "ussr";
+  src: local("ussr"),
+   url(./fonts/Disket-Mono-Regular.ttf) format("truetype");
+} */
 
 #app{
 
   height: 100vh;
   margin: 0;
   padding: 0;
-  font-family: 'Jura', sans-serif;
-  /* background:linear-gradient(-10deg, rgb(7 1 11) 0%, rgb(38 38 43) 45%, rgb(44 49 57) 100%); */
-  
-  /* background:linear-gradient(-10deg, rgb(8, 61, 51) 0%, rgb(84, 110, 120) 45%, rgb(71, 148, 166) 100%); */
+  font-family: 'jura', arial;
 
-  /* background:linear-gradient(-10deg, rgb(58, 22, 2) 0%, rgb(165, 145, 71) 45%, rgb(71, 44, 10) 100%); */
 
-  /* background:linear-gradient(-10deg, rgb(63, 46, 36) 0%, rgb(162, 160, 151) 45%, rgb(110, 105, 81) 100%); */
-  background: conic-gradient(from 60deg at 40%  60%, transparent 0%, #63CFEF75 30%, #86D6EC40 100%) 50% 20%/120% 130%, linear-gradient(20deg, #8EACF5 0%, #67DDE6 30%, #2187CB 70%, #55EDDF 100%);
-  
+
+/* голубой */
+  /* background: conic-gradient(from 60deg at 40%  60%, transparent 0%, #63CFEF75 30%, #86D6EC40 100%) 50% 20%/120% 130%, linear-gradient(20deg, #8EACF5 0%, #67DDE6 30%, #2187CB 70%, #55EDDF 100%); */
+/* темный */
+  /* #3a3a3a  #292c31       #0c0c0c #472a23 #946a62*/
+  /* background: conic-gradient(from 60deg at 40%  60%, transparent 0%, #24282975 30%, #7e7c7b40 100%) 50% 20%/120% 130%, linear-gradient(20deg, #110404 0%, #343431 30%, #626262 70%, #333333 100%); */
+  background: conic-gradient(from 60deg at 50%  55%, transparent 0%, #29303275 30%, #7b7d7e40 100%) 50% 20%/120% 130%, linear-gradient(20deg, #040811 0%, #313334 30%, #626262 70%, #333333 100%);
+
 
   background-position: center;
   background-size:cover; 
 }
 </style>
 <style scoped>
-.filter{
-  backdrop-filter: blur(3px);
-  /* background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.329) 150%); */
-  background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.769) 150%);
 
-  /* background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.39) 70%); */
-
-background-color: #24242446;
-
-
-
-
-
-
+.texture {
   height: 100vh;
   width: 100%;
   position:absolute;
   z-index: 0;
 
+
+/* горошек */
+  /* background-image: repeating-radial-gradient(
+  circle,
+  #3a4e6300, #3a4e6300 45%,
+  transparent 45%, transparent 60%,
+  #000000 60%, #3a4e6300 100%
+  );
+  background-size: 15px 15px;
+  opacity: 0.3; */
+/* клетка */
+  background-image: -webkit-repeating-linear-gradient(315deg,  
+  #232323, #232323 10%,  
+  transparent 10%, transparent 50%
+  ),
+  -webkit-repeating-linear-gradient(225deg,  
+  #232323, #232323 10%,  
+  transparent 10%, transparent 50%
+  );
+
+  /* background-size: 25px 25px; */
+  /* background-size: 35px 35px; */
+  background-size: 45px 45px;
+  opacity: 0.3;
+
+
+
+
+
+}
+
+.filter{
   
+
+  backdrop-filter: blur(1px);
+  /* background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.329) 150%); */
+  /* background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.769) 150%); */
+
+  /* background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.39) 70%); */
+  background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(0, 0, 0, 0.39) 70%); 
+  background-color: #24242446;
+
+  height: 100vh;
+  width: 100%;
+  position:absolute;
+  z-index: 0;
   
 }
 .nightFilter{
@@ -245,6 +284,9 @@ background-color: #24242446;
   position:absolute;
   z-index: 1;
   opacity: 0;
+
+
+
 }
 .nightFilterOn{
   opacity: 1;
@@ -252,6 +294,7 @@ background-color: #24242446;
 .root{
   height: 100%;
   /* color: #ffffff; */
+  /* color: #ecf7ff; */
   color: #fffde0;
 
   z-index: 500;

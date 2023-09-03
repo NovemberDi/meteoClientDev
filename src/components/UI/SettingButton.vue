@@ -21,7 +21,7 @@
   fill: rgba(33, 52, 41, 0.696);
 }
 .dayBtn{
-  fill: rgba(255, 242, 188, 0.321);
+  fill: rgba(132, 129, 121, 0.321);
   filter: drop-shadow(0px 5px 5px rgb(34, 32, 43));
 }
 .settingBtnWrap{
