@@ -191,11 +191,6 @@
 </script>
 
 <style>
-/* @font-face {
-  font-family: "ussr";
-  src: local("ussr"),
-   url(./fonts/Disket-Mono-Regular.ttf) format("truetype");
-} */
 
 #app{
 
@@ -225,17 +220,6 @@
   width: 100%;
   position:absolute;
   z-index: 0;
-
-
-/* горошек */
-  /* background-image: repeating-radial-gradient(
-  circle,
-  #3a4e6300, #3a4e6300 45%,
-  transparent 45%, transparent 60%,
-  #000000 60%, #3a4e6300 100%
-  );
-  background-size: 15px 15px;
-  opacity: 0.3; */
 /* клетка */
   background-image: -webkit-repeating-linear-gradient(315deg,  
   #232323, #232323 10%,  
@@ -251,15 +235,10 @@
   background-size: 45px 45px;
   opacity: 0.3;
 
-
-
-
-
 }
 
 .filter{
   
-
   backdrop-filter: blur(1px);
   /* background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.329) 150%); */
   /* background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(5, 69, 97, 0.769) 150%); */

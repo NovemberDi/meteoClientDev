@@ -1,6 +1,6 @@
 <template >
   <div id="chart" class="chart">
-    <apexchart @mouseMove="click" id="suka" ref="radar" type="area" height="350" :options="chartOptions" :series="series"></apexchart>
+    <apexchart   type="area" height="350" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
 
 <style scoped>
 .chart{
-width: 80%;
-
+width: 100%;
+color: #333333;
 }
 </style>
