@@ -19,6 +19,7 @@
         :circleSize="circleSize"
 
         :queryResult="queryResult"
+        :wsAlive="wsAlive"
         @onQuery="getData"
         >
       </router-view>
@@ -77,6 +78,7 @@
         isAliveSensor: false,
 
         ws: null,
+        wsAlive: false,
         
         time:{
           blink:false,
@@ -97,7 +99,7 @@
     methods:{
           connect(){
           this.ws = new WebSocket('wss://peredaifile.ru:3031');
-
+          this.ws.onopen = () => {this.wsAlive = true}
             this.ws.onmessage =  (event) => {
               let message = JSON.parse(event.data);
               // console.log("сообщение от сервера!");
@@ -184,6 +186,13 @@
     mounted(){
     this.getTime();
     this.connect();
+    setInterval(() => {
+      try{
+        this.ws.send(JSON.stringify({type:'ping'}))
+      } catch(err){
+        console.log('WS is down: ', err)
+      }
+    }, 600000);
 
     }   
   }

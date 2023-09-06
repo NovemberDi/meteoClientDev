@@ -39,7 +39,7 @@
   top: 0;
   left: 0;
   /* background: #1e110765; */
-  background: #e2b08929;
+  background: #98a3a729;
   backdrop-filter: blur(3px);
   z-index: 100;
 }

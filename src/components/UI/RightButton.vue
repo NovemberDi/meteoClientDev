@@ -39,13 +39,13 @@ align-items: center;
 }
 .LeftBtn{
   fill: rgba(132, 129, 121, 0.321);
-  height: 70px;
-  width: 70px;
-  transition: 50ms linear;
+  height: 55px;
+  width: 55px;
+  transition: 40ms linear;
   z-index: 99;
 }
 .LeftBtn:active{
-  height: 85px;
-  width: 85px;
+  height: 65px;
+  width: 65px;
 }
 </style>

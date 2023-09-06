@@ -7,7 +7,7 @@
         <div class="year intervalButton" :class="{current: selector.year}"  @click="setSelector('year')" >Год</div>        
       </div>
       
-      <BarChart :chartOptions="chartOptions" :series="series"></BarChart>
+      <BarChart  :dataSet="dataSet" ></BarChart>
       <div class="bottomBar">
         <LeftButton @click="moveLeft"></LeftButton>
         <RightButton @click="moveRight" ></RightButton>
@@ -29,115 +29,24 @@
         startTime:  '',
         endTime: '',
         rangeOfDays: 1,
+        dataSet: [],
 
-        series: [{
-          name: 'Улица',
-          data: []
-        }, {
-          name: 'Дом',
-          data: []
-        }],
-        chartOptions: {
-          chart: {
-            height: 350,
-            type: 'area'
-          },
-          dataLabels: {
-            enabled: false
-          },
-          // colors:['#F95936', '#F1c063'],
-          stroke: {
-            curve: 'smooth'
-          },
-          legend: {
-            labels: {
-                // colors: '#fffde0',
-                useSeriesColors: true
-            },
-          },
-          yaxis:{
-            
-            labels: {
-
-              formatter: (value) => { return  value?value.toFixed(1):value},
-
-              style: {
-                  colors: '#fffde0',
-              },
-            },
-          },
-          xaxis: {
-            type: 'datetime',
-            categories: [new Date().toISOString()], // или просто Date.now() :)
-            // tickPlacement: 'on',
-            labels: {
-              datetimeUTC: false, // системный часовой пояс
-              style: {
-                  colors: '#fffde0',
-              },
-              
-            },
-           
-            
-          },
-          tooltip: {
-            x: {
-              format: 'dd.MM.yyyy HH:mm'
-            }
-          },
-          noData: {
-            text: 'Загрузка..',
-          },
-          chart: {
-            toolbar: {
-              show: true,
-              tools: {
-                zoomin: false, 
-                zoomout: false,    
-              }
-            },
-            animations: {
-              enabled: true,
-              easing: 'easeinout',
-              speed: 800,
-              animateGradually: {
-                  enabled: false,
-                  delay: 150
-              },
-              dynamicAnimation: {
-                  enabled: true,
-                  speed: 350
-              }
-            },
-            locales: [{
-      "name": "ru",
-      "options": {
-        "months": ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
-        "shortMonths": ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
-        "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        "shortDays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      }
-    }],
-    defaultLocale: "ru"
-          }
-        },
-          }
-          
+      }      
       },
       props:{
-          queryResult: {type: Object}
+          queryResult: {type: Object},
+          wsAlive:  {type: Boolean},
       },
       methods:{
           getData(){
-
-              try{
+            if (this.wsAlive)
+              {
               this.$emit('onQuery',{startTime:this.startTime, endTime:this.endTime})
-            } catch{
+            } else{
               setTimeout(()=>{
                 this.getData()
               },100)
             }
-
           },
           setSelector(val){
             for (let key in this.selector) {
@@ -146,7 +55,6 @@
             this.selector[val] = true;
             this.setNewDate();
             this.getData()
-
           },
           setNewDate(){
             if (this.selector.day) this.rangeOfDays = 1;
@@ -157,8 +65,6 @@
             this.endTime = Date.now();
           },
           moveLeft(){
-            // this.startTime = new Date(this.startTime).setHours(new Date(this.startTime).getHours()-24*this.rangeOfDays);
-            // this.endTime = new Date(this.endTime).setHours(new Date(this.endTime).getHours()-24*this.rangeOfDays);
             this.startTime -= 24*3600*1000*this.rangeOfDays;
             this.endTime -= 24*3600*1000*this.rangeOfDays;
             this.getData();
@@ -167,29 +73,28 @@
             this.startTime += 24*3600*1000*this.rangeOfDays;
             this.endTime += 24*3600*1000*this.rangeOfDays;
             this.getData();
+          },
+          makeDataSet(newValue){
+            this.dataSet = { 
+                series: [
+                  {name:'Улица', data:[...newValue.map((item) => -(-item.content.outTemp))]},
+                  {name:'Дом', data:[...newValue.map((item) => -(-item.content.inTemp))]}
+                ],
+                categories: newValue.map((item) => item.content.timestamp)
+              }
           }
       },
 
       watch:{
-          queryResult(newValue){
-              // this.chartOptions.xaxis.categories = newValue.map((item) => new Date(item.content.timestamp).toISOString());
-              this.chartOptions = { xaxis: {
-                  // categories: newValue.map((item) => new Date(item.content.timestamp).toISOString())
-                  categories: newValue.map((item) => item.content.timestamp)
-
-                  }}
-              setTimeout(() => {
-                this.series[0].data = newValue.map((item) => -(-item.content.outTemp));
-                this.series[1].data = newValue.map((item) => -(-item.content.inTemp));
-              },100)
-          }
+        queryResult(newValue){
+          setTimeout(() => {
+            this.makeDataSet(newValue)
+          },200)
+        }
       },
       mounted(){
-        this.setNewDate(),
-        setTimeout(()=>{
-          this.getData()
-        },100)
-        
+        this.setNewDate();
+        this.getData();   
       }
   }
      
@@ -246,7 +151,7 @@
   box-shadow: 7px 7px 5px 1px #11111186;
   
 
-  /* border-radius: 50%; */
+ 
   
   
 }

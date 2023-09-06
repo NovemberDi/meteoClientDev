@@ -1,6 +1,6 @@
 <template >
   <div id="chart" class="chart">
-    <apexchart   type="area" height="350" :options="chartOptions" :series="series"></apexchart>
+    <apexchart   type="area" height="100%" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
 
@@ -8,15 +8,111 @@
 export default {
     name: 'BarChart',
     props:{
-      chartOptions:{type:Object},
-      series:{type:Object},
+      dataSet:{type:Object},
     },
-    data: function() {
-      return {      
+    data() {
+      return { 
+            series: [{
+              name: 'Улица',
+              data: []
+            }, {
+              name: 'Дом',
+              data: []
+            }],
+            chartOptions: {
+              chart: {
+                type: 'area'
+              },
+              dataLabels: {
+                enabled: false
+              },
+              // colors:['#F95936', '#F1c063'],
+              stroke: {
+                curve: 'smooth'
+              },
+              legend: {
+                labels: {
+                    // colors: '#fffde0',
+                    useSeriesColors: true
+                },
+              },
+              yaxis:{
+                
+                labels: {
+
+                  formatter: (value) => { return  value?value.toFixed(1):value},
+
+                  style: {
+                      colors: '#fffde0',
+                  },
+                },
+              },
+              xaxis: {
+                type: 'datetime',
+                categories: [new Date().toISOString()], // или просто Date.now() :)
+                // tickPlacement: 'on',
+                labels: {
+                  datetimeUTC: false, // системный часовой пояс
+                  style: {
+                      colors: '#fffde0',
+                  },
+                  
+                },
+              
+                
+              },
+              tooltip: {
+                x: {
+                  format: 'dd.MM.yyyy HH:mm'
+                }
+              },
+              noData: {
+                text: 'Загрузка..',
+              },
+              chart: {
+                toolbar: {
+                  show: true,
+                  tools: {
+                    zoomin: false, 
+                    zoomout: false,    
+                  }
+                },
+                animations: {
+                  enabled: false,
+                  easing: 'easeinout',
+                  speed: 800,
+                  animateGradually: {
+                      enabled: false,
+                      delay: 150
+                  },
+                  dynamicAnimation: {
+                      enabled: true,
+                      speed: 350
+                  }
+                },
+                locales: [{
+                  "name": "ru",
+                  "options": {
+                    "months": ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+                    "shortMonths": ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
+                    "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                    "shortDays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                  }
+                }],
+                defaultLocale: "ru"
+              }
+            },
+               
       }
     },
     methods:{
     },
+    watch:{
+          dataSet(newValue){   
+              this.chartOptions = { xaxis: { categories: newValue.categories}};
+                this.series = newValue.series;
+          }
+      },
     // watch:{
     //   chartOptions:{
     //     handler(newValue){
@@ -36,6 +132,7 @@ export default {
 <style scoped>
 .chart{
 width: 100%;
+height: 80%;
 color: #333333;
 }
 </style>
