@@ -4,14 +4,10 @@
   <div class="nightFilter" :class="{nightFilterOn:nightMode}"></div>
   <div class="root" :class="{night:nightMode}" onselectstart="return false">
     <div class="offline" v-show="!isAliveSensor">сенсор недоступен</div>
-    <MainClock :time = time :nightMode="nightMode"></MainClock>
-     <!-- <SensorPanel 
-        @click=" autoMode?'':nightMode = !nightMode"
-        :nightMode="nightMode"
-        :sensors="sensors"
-        :circleSize="circleSize"
-     ></SensorPanel> -->
+   
      <router-view 
+        :time = "time"
+
         @onChangeMode="nightMode = !nightMode"
         :autoMode="autoMode"
         :nightMode="nightMode"
@@ -23,25 +19,27 @@
         @onQuery="getData"
         >
       </router-view>
-     <SettingButton 
-        @click="settingView=!settingView"
-        :nightMode="nightMode">
-    </SettingButton>
-    <HomeButton 
-    :nightMode="nightMode"
-    @click="$router.push('/')"
-    ></HomeButton>
-    <HistoryButton
-    :nightMode="nightMode"
-    @click="$router.push('/history')"
-    ></HistoryButton>
-    <SettingModal  
-        @click.self="settingView = false"
-        :autoMode="autoMode"
-        v-show="settingView"
-        @switchAutoMode="autoMode = !autoMode"
-        >
-    </SettingModal>
+      <div class="navPanel">
+          <SettingButton 
+              @click="settingView=!settingView"
+              :nightMode="nightMode">
+          </SettingButton>
+          <HomeButton 
+              :nightMode="nightMode"
+              @click="$router.push('/')"
+          ></HomeButton>
+          <HistoryButton
+              :nightMode="nightMode"
+              @click="$router.push('/history')"
+          ></HistoryButton>
+          <SettingModal  
+              @click.self="settingView = false"
+              :autoMode="autoMode"
+              v-show="settingView"
+              @switchAutoMode="autoMode = !autoMode"
+              >
+          </SettingModal>
+  </div>
   </div>  
 </template>
 
@@ -202,12 +200,13 @@
 <style>
 
 #app{
-
-  height: 100vh;
+  
+  min-height: 100vh;
+  /* height: 100vh; */
   margin: 0;
   padding: 0;
   font-family: 'jura', arial;
-
+  position: relative;
 
 
 /* голубой */
@@ -225,7 +224,7 @@
 <style scoped>
 
 .texture {
-  height: 100vh;
+  height:100%;
   width: 100%;
   position:absolute;
   z-index: 0;
@@ -256,7 +255,7 @@
   background: radial-gradient(circle, rgba(20,38,39,0) 20%, rgba(0, 0, 0, 0.39) 70%); 
   background-color: #24242446;
 
-  height: 100vh;
+  height: 100%;
   width: 100%;
   position:absolute;
   z-index: 0;
@@ -267,7 +266,7 @@
 
   /* background: radial-gradient(circle, rgb(9, 16, 16) 20%, rgb(0, 0, 0) 150%); */
   transition:  0.5s linear;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   position:absolute;
   z-index: 1;
@@ -281,12 +280,15 @@
 }
 .root{
   height: 100%;
+  /* width: 100%; */
   /* color: #ffffff; */
   /* color: #ecf7ff; */
   color: #fffde0;
 
   z-index: 500;
-  position: relative;
+  /* position: absolute;
+  top:0;
+  left: 0; */
   transition: color 1s linear;
 
 
@@ -306,5 +308,13 @@
   font-weight: 700;
   font-size: 12px;
   line-height: 8px;
+}
+.navPanel{
+  /* display: none; */
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
 }
 </style>

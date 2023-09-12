@@ -42,10 +42,6 @@ align-items: center;
   /* transform: translate(-50%,50%); */
   transition: 50ms linear;
   z-index: 101;
-  
-
-
-
 }
 .settingBtn:active{
   height: 45x;

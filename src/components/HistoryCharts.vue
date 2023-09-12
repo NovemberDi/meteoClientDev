@@ -6,8 +6,16 @@
         <div class="month intervalButton" :class="{current: selector.month}"  @click="setSelector('month')" >Месяц</div>
         <div class="year intervalButton" :class="{current: selector.year}"  @click="setSelector('year')" >Год</div>        
       </div>
+
       
       <BarChart  :dataSet="dataSet" ></BarChart>
+      <!-- <BarChart  :dataSet="dataSet" ></BarChart>
+      <BarChart  :dataSet="dataSet" ></BarChart>
+      <BarChart  :dataSet="dataSet" ></BarChart>
+      <BarChart  :dataSet="dataSet" ></BarChart>
+      <BarChart  :dataSet="dataSet" ></BarChart> -->
+
+
       <div class="bottomBar">
         <LeftButton @click="moveLeft"></LeftButton>
         <RightButton @click="moveRight" ></RightButton>
@@ -75,12 +83,30 @@
             this.getData();
           },
           makeDataSet(newValue){
+            let ser1 = newValue.filter((item, index, arr) => {
+             
+              if (index == 0 || index == arr.length-1) return true;
+              // if ((item.content.outTemp > arr[index-1].content.outTemp &&  item.content.outTemp > arr[index+1].content.outTemp) || (item.content.outTemp < arr[index-1].content.outTemp &&  item.content.outTemp < arr[index+1].content.outTemp)) return true;
+              if ((item.content.outTemp > arr[index-1].content.outTemp &&  item.content.outTemp > arr[index+1].content.outTemp)
+               ||
+              (item.content.outTemp < arr[index-1].content.outTemp &&  item.content.outTemp < arr[index+1].content.outTemp)
+               ) return true;
+
+              
+            })
+
             this.dataSet = { 
-                series: [
-                  {name:'Улица', data:[...newValue.map((item) => -(-item.content.outTemp))]},
-                  {name:'Дом', data:[...newValue.map((item) => -(-item.content.inTemp))]}
+                 series: [
+                  {name:'Улица', data:[...ser1.map((item) => -(-item.content.outTemp))]},
+                  {name:'Дом', data:[...ser1.map((item) => -(-item.content.inTemp))]},
+                  
                 ],
-                categories: newValue.map((item) => item.content.timestamp)
+                // series: [
+                //   {name:'Улица', data:[...newValue.map((item) => -(-item.content.outTemp))]},
+                //   // {name:'Дом', data:[...newValue.map((item) => -(-item.content.inTemp))]}
+                // ],
+                categories: ser1.map((item) => item.content.timestamp)
+                // categories: newValue.map((item) => item.content.timestamp)
               }
           }
       },
@@ -155,17 +181,22 @@
   
   
 }
+.dataRange{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .historyChartsWrap{
   display: flex;
   align-items: center;
-  /* justify-content: center; */
+  justify-content: center;
   flex-direction: column;
   width: 80%;
-  height: 60%;
-  margin-top: 20px;
+  min-height: 100%;
   margin-left: auto;
   margin-right: auto;
   color: #fffde0;
   -webkit-tap-highlight-color: transparent;
+  padding: 20px 0 100px 0;
 }
 </style>

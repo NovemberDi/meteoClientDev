@@ -1,4 +1,6 @@
 <template>
+  <div class="sensorPanelWrap">
+      <MainClock :time = "time" :nightMode="nightMode"></MainClock>
       <div class="panel" :class="{dayPanel:!nightMode}" @click=changeMode>
       <div class="sensor inTemp">
         <div class="value">
@@ -46,12 +48,14 @@
         <div class="icon"></div>
       </div>
     </div>
+  </div>  
 </template>
 
 <script>
     export default {
         name: 'SensorPanel',
         props:{
+            time:{type: Object},
             autoMode:{type: Boolean},
             nightMode:{type: Boolean},
             sensors: {type: Object},
@@ -66,6 +70,13 @@
 </script>
 
 <style scoped>
+.sensorPanelWrap{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 .panel{
   height: 60%;
   display: grid;
