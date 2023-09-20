@@ -29,7 +29,7 @@
   filter: drop-shadow(0px 5px 5px rgb(34, 32, 43));
 }
 .LeftBtnWrap{
-height:70px;
+height:50px;
 width: 70px;
 /* transform: translate(-50%,0); */
 display: flex;
@@ -39,13 +39,13 @@ align-items: center;
 }
 .LeftBtn{
   fill: rgba(132, 129, 121, 0.321);
-  height: 55px;
-  width: 55px;
+  height: 35px;
+  width: 35px;
   transition: 40ms linear;
   z-index: 99;
 }
 .LeftBtn:active{
-  height: 65px;
-  width: 65px;
+  height: 45px;
+  width: 45px;
 }
 </style>

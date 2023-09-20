@@ -8,7 +8,7 @@ import CirclePpm from '@/components/CirclePpm.vue'
 import BarChart from '@/components/BarChart.vue'
 import LeftButton from '@/components/UI/LeftButton.vue'
 import RightButton from '@/components/UI/RightButton.vue'
-
+import SecondChart from '@/components/SecondChart.vue'
 
 
 
@@ -24,5 +24,6 @@ export default[
     HistoryButton,
     BarChart,
     LeftButton,
-    RightButton
+    RightButton,
+    SecondChart
 ]

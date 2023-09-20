@@ -1,12 +1,12 @@
 <template >
-  <div id="chart" class="chart">
-    <apexchart   type="area" height="250px" :options="chartOptions" :series="series"></apexchart>
+  <div  class="chart">
+    <apexchart   type="bar" height="150px" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
 
 <script>
 export default {
-    name: 'BarChart',
+    name: 'SecondChart',
     props:{
       dataSet:{type:Object},
     },
@@ -15,17 +15,22 @@ export default {
             series: [{
               name: 'Улица',
               data: []
-            }, {
-              name: 'Дом',
-              data: []
-            }],
+            },],
             chartOptions: {
               chart: {
-                type: 'area'
+                type: 'bar'
               },
               dataLabels: {
-                enabled: false
+              enabled: true,
+              formatter: function (val) {
+                return val + "%";
               },
+              offsetY: 0,
+              style: {
+                fontSize: '12px',
+                colors: ["#fffde0"]
+              }
+            },
               // colors:['#F95936', '#F1c063'],
               stroke: {
                 curve: 'smooth'
@@ -40,7 +45,7 @@ export default {
                 
                 labels: {
 
-                  formatter: (value) => { return  value?value.toFixed(1):value},
+                  formatter: (value) => { return  value?value.toFixed(0):value},
 
                   style: {
                       colors: '#fffde0',
@@ -67,7 +72,7 @@ export default {
                 }
               },
               noData: {
-                text: 'Нет данных',
+                text: 'Нет данных..',
               },
               chart: {
                 toolbar: {
@@ -110,7 +115,7 @@ export default {
     watch:{
           dataSet(newValue){   
               this.chartOptions = { xaxis: { categories: newValue.categories}};
-                this.series = newValue.series;
+                this.series = [newValue.series[2]?newValue.series[2]:''];
           }
       },
     // watch:{

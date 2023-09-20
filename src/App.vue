@@ -224,6 +224,7 @@
 </style>
 <style scoped>
 .router{
+  position: relative;
   z-index: 100;
 }
 .texture {

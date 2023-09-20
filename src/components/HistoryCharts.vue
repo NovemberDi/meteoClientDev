@@ -6,20 +6,16 @@
         <div class="month intervalButton" :class="{current: selector.month}"  @click="setSelector('month')" >Месяц</div>
         <div class="year intervalButton" :class="{current: selector.year}"  @click="setSelector('year')" >Год</div>        
       </div>
-
-      
-      <BarChart  :dataSet="dataSet" ></BarChart>
-      <!-- <BarChart  :dataSet="dataSet" ></BarChart>
-      <BarChart  :dataSet="dataSet" ></BarChart>
-      <BarChart  :dataSet="dataSet" ></BarChart>
-      <BarChart  :dataSet="dataSet" ></BarChart>
-      <BarChart  :dataSet="dataSet" ></BarChart> -->
-
-
       <div class="bottomBar">
         <LeftButton @click="moveLeft"></LeftButton>
         <RightButton @click="moveRight" ></RightButton>
       </div>
+      
+      <BarChart  :dataSet="dataSet" ></BarChart>
+      <SecondChart :dataSet="dataSet"></SecondChart>
+
+
+
   </div>
 </template>
 
@@ -83,8 +79,8 @@
             this.getData();
           },
           makeDataSet(newValue){
-            let ser1 = newValue.filter((item, index, arr) => {
-             
+            let temp = newValue.filter((item, index, arr) => {
+              if (this.selector.day) return true;
               if (index == 0 || index == arr.length-1) return true;
               // if ((item.content.outTemp > arr[index-1].content.outTemp &&  item.content.outTemp > arr[index+1].content.outTemp) || (item.content.outTemp < arr[index-1].content.outTemp &&  item.content.outTemp < arr[index+1].content.outTemp)) return true;
               if ((item.content.outTemp > arr[index-1].content.outTemp &&  item.content.outTemp > arr[index+1].content.outTemp)
@@ -97,15 +93,16 @@
 
             this.dataSet = { 
                  series: [
-                  {name:'Улица', data:[...ser1.map((item) => -(-item.content.outTemp))]},
-                  {name:'Дом', data:[...ser1.map((item) => -(-item.content.inTemp))]},
+                  {name:'Улица', data:[...temp.map((item) => -(-item.content.outTemp))]},
+                  {name:'Дом', data:[...temp.map((item) => -(-item.content.inTemp))]},
+                  // {name:'Давление', data:[...temp.filter((item, index, arr) => {if (index % 3 == 0) return true})]},
                   
                 ],
                 // series: [
                 //   {name:'Улица', data:[...newValue.map((item) => -(-item.content.outTemp))]},
                 //   // {name:'Дом', data:[...newValue.map((item) => -(-item.content.inTemp))]}
                 // ],
-                categories: ser1.map((item) => item.content.timestamp)
+                categories: temp.map((item) => item.content.timestamp)
                 // categories: newValue.map((item) => item.content.timestamp)
               }
           }
@@ -134,7 +131,7 @@
   margin-bottom: 12px;
 }
 .bottomBar{
-  height: 50px;
+  height: 40px;
   width: 100%;
   display: flex;
   justify-content: space-between;
