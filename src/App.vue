@@ -5,7 +5,7 @@
   <div class="root" :class="{night:nightMode}" onselectstart="return false">
     <div class="offline" v-show="!isAliveSensor">сенсор недоступен</div>
    
-     <router-view 
+     <router-view class="router"
         :time = "time"
 
         @onChangeMode="nightMode = !nightMode"
@@ -32,14 +32,15 @@
               :nightMode="nightMode"
               @click="$router.push('/history')"
           ></HistoryButton>
-          <SettingModal  
+
+      </div>
+      <SettingModal  
               @click.self="settingView = false"
               :autoMode="autoMode"
               v-show="settingView"
               @switchAutoMode="autoMode = !autoMode"
               >
           </SettingModal>
-  </div>
   </div>  
 </template>
 
@@ -222,7 +223,9 @@
 }
 </style>
 <style scoped>
-
+.router{
+  z-index: 100;
+}
 .texture {
   height:100%;
   width: 100%;
