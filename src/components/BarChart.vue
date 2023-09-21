@@ -24,9 +24,15 @@ export default {
                 type: 'area'
               },
               dataLabels: {
-                enabled: false
+                enabled: true,
+                enabledOnSeries: [0],
+                // formatter: function (val) {
+                // if (val > 0) return  val.toFixed()+'°C';
+                // if (val == Math.max( ...data.series[0].data)) return  val.toFixed()+'°C';
+                
+              // },
               },
-              // colors:['#F95936', '#F1c063'],
+              colors:['#008110', '#F1c063'],
               stroke: {
                 curve: 'smooth'
               },
@@ -110,8 +116,14 @@ export default {
     watch:{
           dataSet(newValue){   
               this.chartOptions = { xaxis: { categories: newValue.categories}};
-                this.series = newValue.series;
+              this.series = newValue.series;
+              this.chartOptions.dataLabels =  {
+              formatter: function (val) {
+                if (val == Math.max( ...newValue.series[0].data)) { return  val.toFixed()+'°C'};
+                if (val.toFixed() == Math.min( ...newValue.series[0].data).toFixed()) return  val.toFixed()+'°C';
+              }
           }
+        }
       },
     // watch:{
     //   chartOptions:{

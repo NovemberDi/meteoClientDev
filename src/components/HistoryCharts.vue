@@ -11,8 +11,8 @@
         <RightButton @click="moveRight" ></RightButton>
       </div>
       
-      <BarChart  :dataSet="dataSet" ></BarChart>
-      <SecondChart :dataSet="dataSet"></SecondChart>
+      <BarChart  :dataSet="dataSet.temp" ></BarChart>
+      <SecondChart :dataSet="dataSet.press"></SecondChart>
 
 
 
@@ -33,7 +33,11 @@
         startTime:  '',
         endTime: '',
         rangeOfDays: 1,
-        dataSet: [],
+        dataSet: {
+          temp: {},
+          press: {},
+          humPpm: {}
+        },
 
       }      
       },
@@ -82,29 +86,27 @@
             let temp = newValue.filter((item, index, arr) => {
               if (this.selector.day) return true;
               if (index == 0 || index == arr.length-1) return true;
-              // if ((item.content.outTemp > arr[index-1].content.outTemp &&  item.content.outTemp > arr[index+1].content.outTemp) || (item.content.outTemp < arr[index-1].content.outTemp &&  item.content.outTemp < arr[index+1].content.outTemp)) return true;
               if ((item.content.outTemp > arr[index-1].content.outTemp &&  item.content.outTemp > arr[index+1].content.outTemp)
                ||
               (item.content.outTemp < arr[index-1].content.outTemp &&  item.content.outTemp < arr[index+1].content.outTemp)
                ) return true;
-
-              
             })
+            let press = newValue.filter((item, index, arr) => {if ((index+1) % 6 == 0) return true})
 
-            this.dataSet = { 
+
+            this.dataSet.temp = { 
                  series: [
                   {name:'Улица', data:[...temp.map((item) => -(-item.content.outTemp))]},
-                  {name:'Дом', data:[...temp.map((item) => -(-item.content.inTemp))]},
-                  // {name:'Давление', data:[...temp.filter((item, index, arr) => {if (index % 3 == 0) return true})]},
-                  
+                  {name:'Дом', data:[...temp.map((item) => -(-item.content.inTemp))]},  
                 ],
-                // series: [
-                //   {name:'Улица', data:[...newValue.map((item) => -(-item.content.outTemp))]},
-                //   // {name:'Дом', data:[...newValue.map((item) => -(-item.content.inTemp))]}
-                // ],
                 categories: temp.map((item) => item.content.timestamp)
-                // categories: newValue.map((item) => item.content.timestamp)
               }
+            this.dataSet.press = {
+              series: [{name:'Дом', data:[...press.map((item) => -(-item.content.press))]}],
+              categories: press.map((item) => item.content.timestamp)
+
+            } 
+            
           }
       },
 

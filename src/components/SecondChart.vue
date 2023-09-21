@@ -1,6 +1,6 @@
 <template >
   <div  class="chart">
-    <apexchart   type="bar" height="150px" :options="chartOptions" :series="series"></apexchart>
+    <apexchart  type='area'  height="150px" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
 
@@ -18,20 +18,21 @@ export default {
             },],
             chartOptions: {
               chart: {
-                type: 'bar'
+                type: 'area'
               },
               dataLabels: {
               enabled: true,
               formatter: function (val) {
-                return val + "%";
+                return   val.toFixed()+' мм';
               },
-              offsetY: 0,
-              style: {
-                fontSize: '12px',
-                colors: ["#fffde0"]
-              }
+              // offsetY: 10,
+              // style: {
+              //   fontSize: '12px',
+              //   colors: ["#fffde0"]
+              // }
             },
-              // colors:['#F95936', '#F1c063'],
+              // colors:['#F20063'],
+              colors:['#ED3B83'],
               stroke: {
                 curve: 'smooth'
               },
@@ -42,9 +43,9 @@ export default {
                 },
               },
               yaxis:{
-                
-                labels: {
 
+                labels: {
+                  
                   formatter: (value) => { return  value?value.toFixed(0):value},
 
                   style: {
@@ -114,8 +115,8 @@ export default {
     },
     watch:{
           dataSet(newValue){   
-              this.chartOptions = { xaxis: { categories: newValue.categories}};
-                this.series = [newValue.series[2]?newValue.series[2]:''];
+            this.chartOptions = { xaxis: { categories: newValue.categories}};
+                this.series = newValue.series;
           }
       },
     // watch:{
