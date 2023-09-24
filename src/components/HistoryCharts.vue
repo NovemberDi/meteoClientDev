@@ -93,11 +93,38 @@
             })
             let press = newValue.filter((item, index, arr) => {if ((index+1) % 6 == 0) return true})
 
-
+            let extremum = temp.reduce(function(accumulator, item, index, array)  {
+              if (index == 0) 
+                return {
+                  max:-(-item.content.outTemp),
+                  min:-(-item.content.outTemp),
+                  categories:[item.content.timestamp,item.content.timestamp]
+                }
+                let max = accumulator.max;
+                let min = accumulator.min;
+                let categories = accumulator.categories;
+              if (-(-item.content.outTemp) > accumulator.max) {
+               max = -(-item.content.outTemp);
+               categories[0] = item.content.timestamp;
+              };
+              if (-(-item.content.outTemp) < accumulator.min) {
+               min = -(-item.content.outTemp);
+               categories[1] = item.content.timestamp;
+              };
+              return {
+                  max:max,
+                  min:min,
+                  categories:categories
+                }
+            }, {} );
+            console.log(extremum)
             this.dataSet.temp = { 
                  series: [
-                  {name:'Улица', data:[...temp.map((item) => -(-item.content.outTemp))]},
-                  {name:'Дом', data:[...temp.map((item) => -(-item.content.inTemp))]},  
+                  {name:'Дом', data:[...temp.map((item) => [item.content.timestamp,-(-item.content.inTemp)])]},
+                  {name:'Улица', data:[...temp.map((item) => [item.content.timestamp,-(-item.content.outTemp)])]},
+                  {name:'min', data:[[extremum.categories[1], extremum.min]]},  
+                  {name:'max', data:[[extremum.categories[0],extremum.max]]},  
+
                 ],
                 categories: temp.map((item) => item.content.timestamp)
               }

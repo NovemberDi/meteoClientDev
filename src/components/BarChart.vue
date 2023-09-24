@@ -12,27 +12,28 @@ export default {
     },
     data() {
       return { 
-            series: [{
-              name: 'Улица',
-              data: []
-            }, {
-              name: 'Дом',
-              data: []
-            }],
+            series: [
+                {
+                name: 'Улица',
+                data: [],
+              }, {
+                name: 'Дом',
+                data: [],
+              },
+            ],
             chartOptions: {
               chart: {
-                type: 'area'
+                // type: 'area'
               },
               dataLabels: {
                 enabled: true,
-                enabledOnSeries: [0],
-                // formatter: function (val) {
-                // if (val > 0) return  val.toFixed()+'°C';
-                // if (val == Math.max( ...data.series[0].data)) return  val.toFixed()+'°C';
+                enabledOnSeries: [2,3],
+                formatter: function (val) {
+                return  val.toFixed(1)+' °C';
                 
-              // },
               },
-              colors:['#008110', '#F1c063'],
+              },
+              colors:['#F1c063', '#008110', '#2e80c7', '#c75e2e'],
               stroke: {
                 curve: 'smooth'
               },
@@ -115,14 +116,14 @@ export default {
     },
     watch:{
           dataSet(newValue){   
-              this.chartOptions = { xaxis: { categories: newValue.categories}};
+              // this.chartOptions = { xaxis: { categories: newValue.categories}};
               this.series = newValue.series;
-              this.chartOptions.dataLabels =  {
-              formatter: function (val) {
-                if (val == Math.max( ...newValue.series[0].data)) { return  val.toFixed()+'°C'};
-                if (val.toFixed() == Math.min( ...newValue.series[0].data).toFixed()) return  val.toFixed()+'°C';
-              }
-          }
+          //     this.chartOptions.dataLabels =  {
+          //     formatter: function (val) {
+          //       if (val == Math.max( ...newValue.series[0].data)) { return  val.toFixed(1)+'°C'};
+          //       if (val == Math.min( ...newValue.series[0].data)) return  val.toFixed(1)+'°C';
+          //     }
+          // }
         }
       },
     // watch:{
@@ -145,5 +146,6 @@ export default {
 .chart{
 width: 100%;
 color: #333333;
+color: #2e80c7;
 }
 </style>
