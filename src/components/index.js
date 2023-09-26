@@ -9,7 +9,7 @@ import BarChart from '@/components/BarChart.vue'
 import LeftButton from '@/components/UI/LeftButton.vue'
 import RightButton from '@/components/UI/RightButton.vue'
 import SecondChart from '@/components/SecondChart.vue'
-
+import ThirdChart from '@/components/ThirdChart.vue'
 
 
 
@@ -25,5 +25,6 @@ export default[
     BarChart,
     LeftButton,
     RightButton,
-    SecondChart
+    SecondChart,
+    ThirdChart
 ]

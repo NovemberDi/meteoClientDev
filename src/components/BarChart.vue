@@ -23,8 +23,22 @@ export default {
             ],
             chartOptions: {
               chart: {
-                // type: 'area'
+                type: 'area'
               },
+            title: {
+                text: 'Температура',
+                align: 'left',
+                margin: 10,
+                offsetX: 50,
+                offsetY: 5,
+                floating: true,
+                style: {
+                  fontSize:  '14px',
+                  fontWeight:  'bold',
+                  fontFamily:  'Jura',
+                  color:  '#fffde0'
+                },
+            },
               dataLabels: {
                 enabled: true,
                 enabledOnSeries: [2,3],
