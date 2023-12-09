@@ -96,6 +96,7 @@ export default {
               formatter: function (val) {
                 return   val.toFixed();
               },
+              offsetY: -5,
             },
               // colors:['#405505'], // болотный
               colors:['#4eabda','#40af05'],

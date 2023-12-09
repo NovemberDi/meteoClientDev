@@ -39,6 +39,13 @@
               :autoMode="autoMode"
               v-show="settingView"
               @switchAutoMode="autoMode = !autoMode"
+              v-model:first="sensors.ppmRange.first"
+              v-model:second="sensors.ppmRange.second"
+              v-model:third="sensors.ppmRange.third"
+              v-model:sunset="timeOfSun.sunset"
+              v-model:dawn="timeOfSun.dawn"
+              @updatePpm="updatePpmRange"
+              @updateTimeOfSun="updateTimeOfSun"
               >
           </SettingModal>
   </div>  
@@ -56,8 +63,8 @@
         settingView: false,
         queryResult: [],
         timeOfSun:{
-          dawn: 7,
-          sunset: 21
+          dawn: '07:00',
+          sunset: '22:30'
         },
         sensors:{
           inTemp: null,
@@ -71,14 +78,19 @@
             yellow: false,
             orange: false,
             red: false
-            },  
+            },
+          ppmRange:{
+            first: 600,
+            second: 1200,
+            third: 3000
+          },    
         },
         
         isAliveSensor: false,
 
         ws: null,
         wsAlive: false,
-        
+
         time:{
           blink:false,
           hour:'',
@@ -114,10 +126,10 @@
 
                   this.isAliveSensor = message.value.isAlive;
 
-                  if (this.sensors.ppm<600) {for (let key in this.sensors.ppmState){this.sensors.ppmState[key] = false}; this.sensors.ppmState.green = true};
-                  if (this.sensors.ppm>600 && this.sensors.ppm<1201) {for (let key in this.sensors.ppmState){this.sensors.ppmState[key] = false}; this.sensors.ppmState.yellow = true};
-                  if (this.sensors.ppm>1200 && this.sensors.ppm<5001) {for (let key in this.sensors.ppmState){this.sensors.ppmState[key] = false}; this.sensors.ppmState.orange = true; }; 
-                  if (this.sensors.ppm>5000) {for (let key in this.sensors.ppmState){this.sensors.ppmState[key] = false}; this.sensors.ppmState.red = true};
+                  if (this.sensors.ppm<=this.sensors.ppmRange.first) {for (let key in this.sensors.ppmState){this.sensors.ppmState[key] = false}; this.sensors.ppmState.green = true};
+                  if (this.sensors.ppm>this.sensors.ppmRange.first && this.sensors.ppm<=this.sensors.ppmRange.second) {for (let key in this.sensors.ppmState){this.sensors.ppmState[key] = false}; this.sensors.ppmState.yellow = true};
+                  if (this.sensors.ppm>this.sensors.ppmRange.second && this.sensors.ppm<=this.sensors.ppmRange.third) {for (let key in this.sensors.ppmState){this.sensors.ppmState[key] = false}; this.sensors.ppmState.orange = true; }; 
+                  if (this.sensors.ppm>this.sensors.ppmRange.third) {for (let key in this.sensors.ppmState){this.sensors.ppmState[key] = false}; this.sensors.ppmState.red = true};
                 };
                 if (message.type == 'queryResult') {
                   this.queryResult = message.value
@@ -144,10 +156,10 @@
               let timer = ()=>{
                 this.time.hour = nowTime.getHours();
                 this.time.min = nowTime.getMinutes();
-                this.time.hour/10<1?this.time.hour='0'+this.time.hour:this.time.hour;
-                this.time.min/10<1?this.time.min='0'+this.time.min:this.time.min;
+                this.time.hour/10 < 1? this.time.hour ='0' + this.time.hour: this.time.hour;
+                this.time.min/10 < 1? this.time.min = '0' + this.time.min: this.time.min;
                 this.time.blink = !this.time.blink;
-                this.autoMode? this.autoModePlay(this.time.hour):'';
+                this.autoMode? this.autoModePlay(this.time.hour,  this.time.min):'';
               };
               let dater = ()=>{
                 this.time.date = nowTime.getDate();
@@ -176,15 +188,43 @@
                             
             },
             
-            autoModePlay(hour){
-              if (hour >= this.timeOfSun.dawn && hour <= this.timeOfSun.sunset) this.nightMode = false
+            autoModePlay(hour, min){
+              let down = this.timeOfSun.dawn.split(':');
+              let sunset = this.timeOfSun.sunset.split(':');
+              let downMin = Number(down[0])*60 + Number(down[1]);
+              let sunsetMin = Number(sunset[0])*60 + Number(sunset[1]);
+              let nowMin =  Number(hour)*60 + Number(min);
+
+              if (nowMin >= downMin && nowMin <= sunsetMin) this.nightMode = false
               else this.nightMode = true;
+            },
+            initPpmRange(){
+              if (localStorage.getItem('ppmRange')){
+                this.sensors.ppmRange = JSON.parse(localStorage.getItem('ppmRange'))
+              }else{
+                localStorage.setItem('ppmRange', JSON.stringify(this.sensors.ppmRange))
+              }
+            },
+            updatePpmRange(){
+              localStorage.setItem('ppmRange', JSON.stringify(this.sensors.ppmRange))
+            },
+            initTimeOfSun(){
+              if (localStorage.getItem('timeOfSun')){
+                this.timeOfSun = JSON.parse(localStorage.getItem('timeOfSun'))
+              }else{
+                localStorage.setItem('timeOfSun', JSON.stringify(this.timeOfSun))
+              }
+            },
+            updateTimeOfSun(){
+              localStorage.setItem('timeOfSun', JSON.stringify(this.timeOfSun))
             },
 
       },
     mounted(){
     this.getTime();
     this.connect();
+    this.initPpmRange();
+    this.initTimeOfSun();
     setInterval(() => {
       try{
         this.ws.send(JSON.stringify({type:'ping'}))

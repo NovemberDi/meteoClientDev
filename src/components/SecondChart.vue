@@ -39,7 +39,7 @@ export default {
               formatter: function (val) {
                 return   val.toFixed()+' мм';
               },
-              // offsetY: 10,
+              offsetY: -5,
               // style: {
               //   fontSize: '12px',
               //   colors: ["#fffde0"]

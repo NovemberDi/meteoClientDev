@@ -10,6 +10,7 @@ import LeftButton from '@/components/UI/LeftButton.vue'
 import RightButton from '@/components/UI/RightButton.vue'
 import SecondChart from '@/components/SecondChart.vue'
 import ThirdChart from '@/components/ThirdChart.vue'
+import MyPreloader from '@/components/MyPreloader.vue'
 
 
 
@@ -26,5 +27,6 @@ export default[
     LeftButton,
     RightButton,
     SecondChart,
-    ThirdChart
+    ThirdChart,
+    MyPreloader
 ]

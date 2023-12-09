@@ -42,9 +42,9 @@ export default {
               dataLabels: {
                 enabled: true,
                 enabledOnSeries: [2,3],
+                offsetY: 10,
                 formatter: function (val) {
-                return  val.toFixed(1)+' °C';
-                
+                return  val.toFixed(1)+' °C'; 
               },
               },
               colors:['#F1c063', '#008110', '#2e80c7', '#c75e2e'],

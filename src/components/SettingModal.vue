@@ -5,14 +5,36 @@
         <div class="settingContent">
           <div class="settingItem">
             <h3>Режим день/ночь</h3>
-            <div>
+            <div class="switchBtnWrap">
               ручной 
               <div class="switchBtn " :class="{switchOn:autoMode}" @click="switchAutoMode" ></div>
                авто
             </div>
+            <div class="onOff" v-if="autoMode">
+              <div class="interval">день
+                <input type="time" :value="dawn" @input="updateDawn">
+              </div>
+              <div class="interval">ночь
+                <input type="time" :value="sunset" @input="updateSunset" >
+              </div>
+            </div>
           </div>
           
         </div>
+        <div class="settingItem">
+            <h3>PPM пределы</h3>
+            <div class="listIntervals">
+              <div class="interval">Первый
+                <input type="text" :value="first" @input="updateFirst">
+              </div>
+              <div class="interval">Второй
+                <input type="text" :value="second" @input="updateSecond">
+              </div>
+              <div class="interval">Третий
+                <input type="text" :value="third" @input="updateThirs">
+              </div>              
+            </div>
+          </div>
       </div>
     </div>
 </template>
@@ -20,10 +42,47 @@
 <script>
     export default {
         name:'SettingModal',
+        data(){
+          return{
+            demo: ''
+          }
+        },
         props:{
-            autoMode: {type: Boolean}
+            autoMode: {type: Boolean},
+            first: {type: Number},
+            second: {type: Number},
+            third: {type: Number},
+            dawn: {type: String},
+            sunset: {type: String},
+
         },
         methods:{
+          updateOnOff(){
+              this.$emit('updateTimeOfSun')
+            },
+          updateDawn(event){
+              this.$emit('update:dawn', event.target.value);
+              this.updateOnOff();
+            },
+            updateSunset(event){
+              this.$emit('update:sunset', event.target.value);
+              this.updateOnOff();
+            },
+            updatePpm(){
+              this.$emit('updatePpm')
+            },
+            updateFirst(event){
+              this.$emit('update:first', Number(event.target.value));
+              this.updatePpm();
+            },
+            updateSecond(event){
+              this.$emit('update:second', Number(event.target.value))
+              this.updatePpm();
+            },
+            updateThirs(event){
+              this.$emit('update:third', Number(event.target.value))
+              this.updatePpm();
+            },
             switchAutoMode(){
                 this.$emit('switchAutoMode'); 
             }
@@ -32,6 +91,30 @@
 </script>
 
 <style scoped>
+.onOff{
+  display: flex;
+  flex-direction: column;
+}
+.listIntervals{
+  display: flex;
+  flex-direction: column;
+}
+.interval{
+  display: flex;
+  justify-content: space-between;
+  margin: 6px;
+}
+.interval > input{
+  width: 60%;
+  background: #e9dcb0;
+  box-shadow: inset 0 0 10px 0 #999999;
+  border: none;
+  box-sizing: border-box;
+  text-align: center;
+  color: #464140;
+  border-radius: 12px;
+  font-weight: 600;  
+}
 .setting{
   height: 100%;
   width: 100%;
@@ -71,6 +154,7 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+margin-bottom: 12px;
 
 }
 .settingItem > h3{
@@ -82,6 +166,9 @@ align-items: center;
   justify-content: space-around;
 }
 /* Переключатель */
+.switchBtnWrap{
+  margin-bottom: 6px;
+}
 .switchBtn {
             display: inline-block;
             width: 52px; 
