@@ -109,7 +109,7 @@
 
     methods:{
           connect(){
-          this.ws = new WebSocket('wss://peredaifile.ru:3031');
+          this.ws = new WebSocket('wss://1439415-ct31112.tw1.ru:3031');
           this.ws.onopen = () => {this.wsAlive = true}
             this.ws.onmessage =  (event) => {
               let message = JSON.parse(event.data);
