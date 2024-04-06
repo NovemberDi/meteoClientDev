@@ -1,19 +1,13 @@
-# meteoclient
+# Клиент для домашней метеостанции
+Приложение используется в качестве экрана метеостанции — стоит планшет на подставке и круглосуточно отображает страницу. 
 
-## Project setup
-```
-npm install
-```
+[Посмотреть демо тут](https://novemberdi.github.io/meteoClient)
+ 
+## Особенности
+-Имеется возможность просмотра статистики показаний в виде графиков за разные периоды времени наблюдений.\
+-Есть режим автоматической смены цветовой темы дня и ночи (в ручном режиме смены — касание зоны с датчиками)\
+-Используется полноэкранный режим с удержанием экрана от засыпания (для активации полного экрана и удержания от засыпания коснитесь часов)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Использованный стек
+frontend: Vue3(options api) + ApexCharts.js + SVG\
+backend: Node.js + WebSocket + PostgreSQL
